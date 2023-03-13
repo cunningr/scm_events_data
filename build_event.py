@@ -11,6 +11,7 @@ GALA_TITLE = "POYNTON DIPPERS ANNUAL CLUB CHAMPIONSHIP GALA"
 GALA_DATE = "15/10/2022"
 GALA_LOCATION = "Poynton Leisure Centre"
 GALA_ID = "30D357FC-A9B0-4CF2-9BD6-B459D92995D4"
+OUTPUT_FILE = "test_gala"
 
 # # Schema
 gala_schema = {
@@ -120,7 +121,7 @@ for id, competitors in events.items():
 
 # Create a new sdtables workbook
 event_wb = SdTables()
-event_wb.add_xlsx_table_from_schema("main", gala_schema, data=gala_schema['data'], worksheet_name="Results")
+event_wb.add_xlsx_table_from_schema("main", gala_schema, data=gala_schema['data'], worksheet_name="Cover")
 
 # Add the events tables using the heat_schema, updating the description
 for _table, _rows in events_tables.items():
@@ -131,7 +132,7 @@ for _table, _rows in events_tables.items():
     heat_schema['description'] = _label
 
     # Add the table to the worksheet
-    event_wb.add_xlsx_table_from_schema(_table, heat_schema, data=_rows, worksheet_name="Results")
+    event_wb.add_xlsx_table_from_schema(_table, heat_schema, data=_rows, worksheet_name=event_data['Stroke'])
 
 # Flatten the events_map so that we can add as a tabel
 _events_table = [row for _,row in events_map.items()]
@@ -145,4 +146,4 @@ for row in event_records:
 event_wb.add_xlsx_table_from_data("competitors", data=[v for _,v in competitors.items()], worksheet_name="Helpers")
 
 # Finally save our openpyexcel workbook
-event_wb.save_xlsx('gala_results')
+event_wb.save_xlsx(OUTPUT_FILE)
