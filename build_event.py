@@ -10,6 +10,7 @@ POOL_SIZE = 20
 GALA_TITLE = "POYNTON DIPPERS ANNUAL CLUB CHAMPIONSHIP GALA"
 GALA_DATE = "15/10/2022"
 GALA_LOCATION = "Poynton Leisure Centre"
+GALA_ID = "30D357FC-A9B0-4CF2-9BD6-B459D92995D4"
 
 # # Schema
 gala_schema = {
@@ -17,12 +18,14 @@ gala_schema = {
     "properties": {
         "Date": {"type": ["string", GALA_DATE]},
         "Location": {"type": ["string", GALA_LOCATION]},
-        "Pool Size": {"type": ["number", POOL_SIZE]}
+        "Pool Size": {"type": ["number", POOL_SIZE]},
+        "Gala ID": {"type": ["number", GALA_ID]}
     },
     "data": [{
         "Date": GALA_DATE,
         "Location": GALA_LOCATION,
-        "Pool Size": POOL_SIZE
+        "Pool Size": POOL_SIZE,
+        "Gala ID": GALA_ID
     }]
 }
 heat_schema = {
