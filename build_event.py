@@ -11,6 +11,7 @@ GALA_TITLE = "POYNTON DIPPERS ANNUAL CLUB CHAMPIONSHIP GALA"
 GALA_DATE = "15/10/2022"
 GALA_LOCATION = "Poynton Leisure Centre"
 GALA_ID = "30D357FC-A9B0-4CF2-9BD6-B459D92995D4"
+OUTPUT_FILE = "test_gala"
 
 # # Schema
 gala_schema = {
@@ -145,4 +146,4 @@ for row in event_records:
 event_wb.add_xlsx_table_from_data("competitors", data=[v for _,v in competitors.items()], worksheet_name="Helpers")
 
 # Finally save our openpyexcel workbook
-event_wb.save_xlsx('gala_results')
+event_wb.save_xlsx(OUTPUT_FILE)
