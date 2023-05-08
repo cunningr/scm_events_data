@@ -4,7 +4,7 @@ from sdtables.sdtables import SdTables
 from datetime import time
 from collections import defaultdict
 
-RESULTS_FILE = './gala_results_2022.xlsx'
+RESULTS_FILE = './gala_swim_times.xlsx'
 
 results_schema = {
     "worksheet": "Sheet1",
@@ -25,7 +25,8 @@ results_schema = {
         "Position": {"type": ["number", "null"]},
         "Event Number": {"type": ["string", "null"]},
         "Gala ID": {"type": ["string", "null"]},
-        "Position": {"type": ["string", "null"]}
+        "Position": {"type": ["string", "null"]},
+        "Round Code": {"type": ["string", "F"]}
     }
 }
 
@@ -46,8 +47,13 @@ def update_result(record, results_tables):
 gala_results_wb = SdTables()
 gala_results_wb.load_xlsx_file(RESULTS_FILE)
 gala_results_sheets = gala_results_wb.get_all_tables_as_dict()
-gala_results_results = gala_results_sheets['Results']
+gala_event_data = gala_results_sheets['Cover']
 gala_results_helpers = gala_results_sheets['Helpers']
+
+gala_results_results = dict()
+for sheet, tables in gala_results_sheets.items():
+    if sheet in ['Fly', 'Back', 'Breast', 'Free', 'Medley']:
+        gala_results_results.update(tables)
 
 gala_events_data = {}
 for row in gala_results_helpers['events']:
@@ -55,7 +61,7 @@ for row in gala_results_helpers['events']:
 
 
 # Flatten and enrich event data
-gala_meta = gala_results_results['main']
+gala_meta = gala_event_data['main']
 data = []
 for table, rows in gala_results_results.items():
     if 'EVENT_' in table:
@@ -68,7 +74,8 @@ for table, rows in gala_results_results.items():
                 "Gala ID": gala_meta[0]['Gala ID'],
                 "Event Number": event,
                 "Swim Distance": event_metadata['Swim Distance'],
-                "Stroke": event_metadata['Stroke']
+                "Stroke": event_metadata['Stroke'],
+                "Round Code": "F"
             })
             data.append(row)
 
